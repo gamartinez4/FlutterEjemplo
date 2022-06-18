@@ -1,42 +1,33 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/views/baseView.dart';
+import 'package:flutter_application_1/views/login.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 
-class Comun extends StatelessWidget {
-  const Comun({Key? key}):super(key: key);
+class Comun<T extends BaseView> extends HookWidget{
+
+  T child;
+
+  Comun(this.child,{Key? key});
   
+
   @override
   Widget build(BuildContext context){
-    return Center(
+    return  Scaffold(
+      backgroundColor: Colors.yellow,
+      body: Center(
       child: Container(
-        color: Colors.yellow,
-        height: MediaQuery.of(context).size.height * 0.7,
-        width: MediaQuery.of(context).size.width,
-        child: Stack(
-          children:[
-
-              LayoutBuilder(
-                builder: (BuildContext context, BoxConstraints constraints) {
-                  return Container(
-                    margin: EdgeInsets.only(left: (constraints.maxWidth- 0.6*constraints.maxWidth)/2, top: 20),
-                    color: Colors.red,
-                    height: 0.5*constraints.maxHeight,
-                    width: 0.6*constraints.maxWidth,
-                  );
-                }
-            ),
-            LayoutBuilder(
-                builder: (BuildContext context, BoxConstraints constraints) {
-                  return Container(
-                    margin: EdgeInsets.only(left: (constraints.maxWidth- 0.6*constraints.maxWidth)/2-30, top: 20),
-                    color: Colors.blue,
-                    height: 60,
-                    width:60 ,
-                  );
-                }
-            )
-          ]
+        height: MediaQuery.of(context).size.height,
+        width: MediaQuery.of(context).size.width*0.7,
+        child: LayoutBuilder(builder: (context, constraints){
+            child.size = constraints.maxWidth;
+            return Container(child: child);
+           }
+          )
+        
         )
       )
     );
+    
   }
 }
       
