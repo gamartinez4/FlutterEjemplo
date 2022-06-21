@@ -10,8 +10,32 @@ class Login extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref){
+   
+    var size = ref.watch(valueProviderSize);
     
-    var listWidget = useState(2
+    var listWidget = useState(
+      <Widget>[
+              Container(
+                key: UniqueKey(),
+                margin: EdgeInsets.only(top: 100),
+                child: const TextField(
+                decoration: InputDecoration(border: OutlineInputBorder(), label: Text("Input1"),)
+            )
+          ),
+          Container(
+            key: UniqueKey(),
+              margin: EdgeInsets.only(top:20),
+              child: const TextField(
+              decoration: InputDecoration(border: OutlineInputBorder(), label: Text("Input2"),)
+            )
+          ),
+          Container(
+            key: UniqueKey(),
+              margin: EdgeInsets.only(top:20),
+              child: const TextField(
+              decoration: InputDecoration(border: OutlineInputBorder(), label: Text("Input3"),)
+            )
+          )]
           );
 
     useEffect(() {
@@ -22,20 +46,42 @@ class Login extends HookConsumerWidget {
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
         print("login_callback");
+        print(listWidget.value.last.toString());
       });
 
-    var size = ref.watch(valueProviderSize);
-
-    return Scaffold(
-
-      body:Container(
-              margin: EdgeInsets.only(top: 100),
-              width: size,
-              child: const TextField(
-              decoration: InputDecoration(border: OutlineInputBorder(), label: Text("Input1"),)
-            )
+    return Container(
+      color: Colors.white,
+      child: Stack(
+        children: [
+         ListView(
+            children: 
+             listWidget.value
+          ,
           ),
-          
+          Container(
+              margin: EdgeInsets.only(top:400),
+              child: FloatingActionButton(onPressed: (){
+                  
+            List<Widget> list  = <Widget>[];
+            var ele;
+            for(ele in listWidget.value){
+              list.add(ele);
+            }
+            list.add(Container(
+            key: UniqueKey(),
+              margin: EdgeInsets.only(top:20),
+              child: const TextField(
+              decoration: InputDecoration(border: OutlineInputBorder(), label: Text("Input3"),)
+            )
+          ));
+            listWidget.value = list;
+                
+                
+              }
+              ),
+            )
+        ],
+      ),
     );
   }
 }
