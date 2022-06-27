@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/utils/Constants.dart';
+import 'package:flutter_application_1/utils/constants.dart';
+import 'package:flutter_application_1/utils/utils.dart';
 import 'package:flutter_application_1/views/baseView.dart';
 import 'package:flutter_application_1/views/comun/Comun.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class Login extends HookConsumerWidget {
+  
   Login({Key? key}):super(key:key);
 
   @override
@@ -18,22 +20,38 @@ class Login extends HookConsumerWidget {
               Container(
                 key: UniqueKey(),
                 margin: EdgeInsets.only(top: 100),
-                child: const TextField(
-                decoration: InputDecoration(border: OutlineInputBorder(), label: Text("Input1"),)
+                child:  TextFormField(
+                  decoration: InputDecoration(border: OutlineInputBorder(), label: Text("Input1"),),
+                  onChanged: 
+                    (String value) async {
+            
+                      ref.read(textsList.state).state[0] = value;
+                      print(ref.read(textsList));
+                  },
+                    
+
             )
           ),
           Container(
-            key: UniqueKey(),
               margin: EdgeInsets.only(top:20),
-              child: const TextField(
-              decoration: InputDecoration(border: OutlineInputBorder(), label: Text("Input2"),)
+              child: TextField(
+                
+                decoration: InputDecoration(border: OutlineInputBorder(), label: Text("Input2"),),
+                onChanged: 
+                    (String value) async {
+                      
+                  },
             )
           ),
           Container(
-            key: UniqueKey(),
               margin: EdgeInsets.only(top:20),
-              child: const TextField(
-              decoration: InputDecoration(border: OutlineInputBorder(), label: Text("Input3"),)
+              child:  TextField(
+              decoration: InputDecoration(border: OutlineInputBorder(), label: Text("Input3"),),
+               onChanged: 
+                    (String value) async {
+                     
+                  },
+            
             )
           )]
           );
@@ -68,7 +86,6 @@ class Login extends HookConsumerWidget {
               list.add(ele);
             }
             list.add(Container(
-            key: UniqueKey(),
               margin: EdgeInsets.only(top:20),
               child: const TextField(
               decoration: InputDecoration(border: OutlineInputBorder(), label: Text("Input3"),)
@@ -79,9 +96,21 @@ class Login extends HookConsumerWidget {
                 
               }
               ),
+            ),
+          Container( margin: EdgeInsets.only(top:600),
+            child: FloatingActionButton(
+              onPressed: () => {
+                print(ref.read(textsList))
+
+              },
+          
+            )
+            
             )
         ],
       ),
     );
   }
+
+  
 }
